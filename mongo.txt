@@ -1,0 +1,74 @@
+users
+
+
+db.user.insertMany([{"name" : "sam"   , "batch" : "1" , "codekatta" : "75" , "attendance" : "90%" , "solved" : "200"},
+{"name" :  "john" , "batch" : "2" , "codekatta" : "59" , "attendance" : "80%", "solved" : "320"},
+{"name" :  "ram" , "batch" : "3" , "codekatta"  : "100" , "attendance" :"60%", "solved" : "450"},
+{"name" :  "kl" , "batch" : "4" , "codekatta" : "78" , "attendance" : "70%", "solved" : "150"},
+{"name" :  "ms" , "batch" : "5" , "codekatta" : "92" , "attendance" : "60%", "solved" : "180"},
+{"name" :  "vk" , "batch" : "6" , "codekatta" :"88" , "attendance" :"70%", "solved" : "172"}]);
+
+task_submission
+
+db.task_sub.insertMany([{"name" : "sam"  ,"attendance" : "P" , "date" : ISODate("2023-10-15T00:00:00.000Z")  , "sub" : "Y"},
+{"name" :  "john","attendance" : "A" , "date" :ISODate("2023-09-15T00:00:00.000Z") , "sub" : "N"},
+{"name" :  "ram" ,"attendance" : "P" ,"date" : ISODate("2023-10-17T00:00:00.000Z") , "sub" : "Y"},
+{"name" :  "kl" ,"attendance" : "A"  , "date" :ISODate("2023-08-15T00:00:00.000Z"), "sub" : "N"},
+{"name" :  "ms" ,"attendance" : "A"  ,"date" : ISODate("2023-10-25T00:00:00.000Z") , "sub" : "N"},
+{"name" :  "vk" ,"attendance" : "P"  ,"date" : ISODate("2023-10-11T00:00:00.000Z") , "sub" : "N"}]);
+                                     
+
+									 
+task
+
+db.task.insertMany([{"topics" : "html" , "tasks" : ['tags','form creation'], "month" : "jan" },
+{"topics" : "css" , "tasks" : ['basics','tables'], "month" : "feb" },
+{"topics" : "js" , "tasks" : ['api call','problems'], "month" : "oct" },
+{"topics" : "nodejs" , "tasks" : ['db connection','fe and be','npm'], "month" : "sep" }]);
+
+drive 
+
+db.drive.insertMany([{"com-name" : "a sol" , "date" :  ISODate("2023-10-15T00:00:00.000Z") ,"users" : ['sam','ms','vk']},
+{"com-name" : "b sol" , "date" : ISODate("2023-08-15T00:00:00.000Z") ,"users" : ['ms','sam','ram','vk']},
+{"com-name" : "c sol" , "date" :ISODate("2023-09-15T00:00:00.000Z"),"users" : ['ram','ms','sam','john'] },
+{"com-name" : "d sol" ,  "date" :  ISODate("2023-10-18T00:00:00.000Z"),"users" : ['john','sam','ram'] }]);
+
+mentors
+
+db.mentors.insertMany([{"name" : "rs"   , "mentee-count" : "23"},
+{"name" :  "srt" , "mentee-count" : "15"},
+{"name" :  "rj" , "mentee-count" : "14"},
+{"name" :  "dc" , "mentee-count" : "14"},
+{"name" :  "si" , "mentee-count" : "32"},
+{"name" :  "ag" , "mentee-count" : "24"}]);
+
+
+
+1. topics and tasks in the month of oct
+
+db.task.find({month:"oct"});
+
+
+2.drive between 15-oct to 31-oct
+
+ db.drive.find({'date':{$gt : ISODate("2023-10-15T00:00:00.000Z") , $lt : ISODate("2023-10-31T00:00:00.000Z")}})
+
+
+3.drive and stds appeared
+
+ db.drive.find({},{"com-name" : 1,"users" : 1,_id : 0});
+
+
+4.prblms solved
+
+db.users.find({},{"name" : 1,"solved" : 1, _id : 0});
+
+
+5.metees count
+
+ db.mentors.find({"mentee-count" : {$gt : '15'}});
+
+
+6.absent and not submitted between 15-10-2023 and 31-10-2023
+
+ db.task_sub.find({'attendance' : 'A','sub':'Y' , 'date' : {$gt : ISODate("2023-10-15T00:00:00.000Z") , $lt : ISODate("2023-10-31T00:00:00.000Z")}})
